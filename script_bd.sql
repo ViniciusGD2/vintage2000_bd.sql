@@ -9,15 +9,18 @@ SELECT * FROM fornecedor;
 
 
 
-INSERT INTO fornecedor (nome, cnpj) VALUES ('Subaru Natsuki','25.123.638/0001-40')
+INSERT INTO fornecedor (nome, cnpj) VALUES ('Raul Enzo Nogueira','25.123.638/0001-40')
+
+
+drop table cliente 
 
 
 CREATE table cliente(
   id_cliente SERIAL PRIMARY KEY, 
   nome varchar(255),
   email varchar(255),
-   cpf varchar(14)
-
+  cpf varchar(14),
+  fk_conta int
 );
 
 SELECT * FROM cliente;
@@ -26,12 +29,37 @@ INSERT INTO cliente(nome, email, cpf) VALUES ('Emilia Tan','sugoku@gmail','641.8
 
 SELECT * FROM cliente;
 
- create table estoque(
-id_estoque serial primary key,
-quantidade int, 
-id_produto int,
-id_forncedor int
- );
+
+
+
+
+
+create table conta(
+  id_conta serial primary key,
+  numero varchar(50),
+  saldo decimal(10,2)
+);
+
+
+
+
+
+
+
+
+
+
+
+DROP TABLE estoque;
+
+create table estoque(
+  id_estoque serial primary key,
+  quantidade int, 
+  fk_produto int, 
+  fk_fornecedor int,
+  CONSTRAINT fk_estoque_produto FOREIGN KEY (fk_produto) REFERENCES produto(id_produto),
+  CONSTRAINT fk_estoque_fornecedor FOREIGN KEY (fk_fornecedor) REFERENCES fornecedor(id_fornecedor)
+);
 
  create table produto(
   id_produto serial primary key,
@@ -43,55 +71,4 @@ id_forncedor int
   id_loja int(8)
  );
 
- create table venda( 
-  id_venda serial primary key,
-  data date,
-  preco decimal,
-  pedido bigint
-
- );
-
-create table item_venda(
-  id_item_venda serial primary key,
-  id_produto bigint
-);
-
-create table carrinho(
-  nome_produto varchar(255),
-  valor decimal
-);
-
-create table pagamento(
-  tipo varchar(200),
-  valor decimal 
-);
-
- CREATE table loja(
-  id_loja serial primary key,
-  nome varchar(255),
-  endereco varchar(255)
-);
-
-CREATE TABLE Telefone_Cliente (
-    id_telefone INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT,
-    ddd VARCHAR(3),
-    numero VARCHAR(10) NOT NULL,
-    tipo VARCHAR(15) DEFAULT 'Celular',
-    CONSTRAINT fk_telefone_cliente FOREIGN KEY id_cliente
-);
-.
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
